@@ -7,16 +7,30 @@ jQuery(function($) {
   var hvpPauseButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-pause"]')
   var hvpFullscreenButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-fullscreen"]')
 
+  hvpVideoElement = $.extend(hvpVideoElement, {
+    playPause: function() {
+      if(this.paused) {
+        this.play()
+        hvpPlayButton.attr('hidden',true).attr('aria-hidden',true)
+        hvpPauseButton.attr('hidden',false).attr('aria-hidden',false)
+      } else {
+        this.pause()
+        hvpPauseButton.attr('hidden',true).attr('aria-hidden',true)
+        hvpPlayButton.attr('hidden',false).attr('aria-hidden',false)
+      }
+    }
+  })
+
+  $(hvpVideoElement).click(function() {
+    hvpVideoElement.playPause()
+  })
+
   hvpPlayButton.click(function() {
-    hvpVideoElement.play()
-    hvpPlayButton.attr('hidden',true).attr('aria-hidden',true)
-    hvpPauseButton.attr('hidden',false).attr('aria-hidden',false)
+    hvpVideoElement.playPause()
   })
 
   hvpPauseButton.click(function() {
-    hvpVideoElement.pause()
-    hvpPauseButton.attr('hidden',true).attr('aria-hidden',true)
-    hvpPlayButton.attr('hidden',false).attr('aria-hidden',false)
+    hvpVideoElement.playPause()
   })
 
   hvpFullscreenButton.on('click', function(){
