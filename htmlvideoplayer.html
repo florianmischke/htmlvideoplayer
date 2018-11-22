@@ -1,37 +1,56 @@
-<link rel="stylesheet" href="normalize.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-<link rel="stylesheet" href="htmlvideoplayer.css">
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
 
-<div class="hvp-wrapper">
-  <div class="hvp-player hvp-player-16by9">
-    <video id="video1" src="src/bbb_sunflower_1080p_60fps_normal.mp4" autoplay muted poster="posterimage.jpg">
-      Your browser does not support HTML5 video.
-    </video>
-    <div class="hvp-player-controls hvp-player-controls-light">
-      <div class="hvp-progess-bar">
-        <div class="hvp-progess-bar-background"></div>
-        <div class="hvp-progess-bar-loaded"></div>
-        <div class="hvp-progess-bar-progess"></div>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="htmlvideoplayer.css">
+
+    <title></title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="hvp-wrapper">
+        <div class="hvp-player hvp-player-16by9">
+          <video id="video1" autoplay poster="posterimage.jpg">
+            <source src="src/bbb_sunflower_1080p_60fps_normal.mp4" type="video/mp4">
+            <source src="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+          <div class="hvp-player-controls hvp-player-controls-light">
+            <div class="hvp-progess-bar">
+              <progress class="hvp-progess-bar-loaded" min="0" max="100" value="0">0% loaded</progress>
+              <progress class="hvp-progess-bar-progess" min="0" max="100" value="0">0% played</progress>
+              <input class="hvp-seek-bar" type="range" min="0" max="100" value="0" step="0.01">
+            </div>
+            <div class="hvp-left">
+              <button type="button" class="hvp-button" data-toggle="hvp-play" hidden aria-hidden="true"><i class="fas fa-play"></i></button>
+              <button type="button" class="hvp-button" data-toggle="hvp-pause"><i class="fas fa-pause"></i></button>
+            </div>
+            <div class="hvp-left">
+              <span class="hvp-volume">
+                <button type="button" class="hvp-button" data-toggle="hvp-volume" data-up="fas fa-volume-up" data-down="fas fa-volume-down" data-mute="fas fa-volume-mute">
+                  <i class="fas fa-volume-up"></i>
+                </button>
+                <input class="hvp-volume-bar" type="range" min="0" max="100" value="0" step="0.01">
+              </span>
+            </div>
+            <!-- <div class="hvp-right">
+              <button type="button" class="hvp-button" data-toggle="hvp-previous"><i class="fas fa-fast-backward"></i></button>
+              <button type="button" class="hvp-button" data-toggle="hvp-backward"><i class="fas fa-backward"></i></button>
+              <button type="button" class="hvp-button" data-toggle="hvp-forward"><i class="fas fa-forward"></i></button>
+              <button type="button" class="hvp-button" data-toggle="hvp-next"><i class="fas fa-fast-forward"></i></button>
+            </div> -->
+            <div class="hvp-right">
+              <button type="button" class="hvp-button" data-toggle="hvp-fullscreen" data-enter-fullscreen="fas fa-expand" data-exit-fullscreen="fas fa-compress"><i class="fas fa-expand"></i></button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="hvp-left">
-        <button type="button" class="hvp-button" data-toggle="hvp-play" hidden aria-hidden="true"><i class="fas fa-play"></i></button>
-        <button type="button" class="hvp-button" data-toggle="hvp-pause"><i class="fas fa-pause"></i></button>
-      </div>
-      <div class="hvp-right">
-        <i class="fas fa-volume-mute"></i>
-        <i class="fas fa-volume-down"></i>
-        <i class="fas fa-volume-up"></i>
-        <button type="button" class="hvp-button" data-toggle="hvp-fullscreen"><i class="fas fa-expand"></i></button>
-      </div>
-      <!-- <div class="hvp-right">
-        <button type="button" class="hvp-button" data-toggle="hvp-previous"><i class="fas fa-fast-backward"></i></button>
-        <button type="button" class="hvp-button" data-toggle="hvp-backward"><i class="fas fa-backward"></i></button>
-        <button type="button" class="hvp-button" data-toggle="hvp-forward"><i class="fas fa-forward"></i></button>
-        <button type="button" class="hvp-button" data-toggle="hvp-next"><i class="fas fa-fast-forward"></i></button>
-      </div> -->
     </div>
-  </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="htmlvideoplayer.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="htmlvideoplayer.js"></script>
+  </body>
+</html>
