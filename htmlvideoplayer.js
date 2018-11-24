@@ -4,8 +4,11 @@ jQuery(function($) {
   var hvpVideoId = hvpVideoPlayer.find('video').attr('id')
   var hvpVideoElement = document.getElementById(hvpVideoId);
 
-  var progressBar = $('.hvp-progess-bar-progess')
-  var hvpSeekBar = $('.hvp-seek-bar')
+  var hvpNotificationArea = hvpVideoPlayer.find('.hvp-notificationarea')
+
+  var loadedProgressBar = hvpVideoPlayer.find('.hvp-progess-bar-loaded')
+  var progressBar = hvpVideoPlayer.find('.hvp-progess-bar-progess')
+  var hvpSeekBar = hvpVideoPlayer.find('.hvp-seek-bar')
 
   var hvpPlayButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-play"]')
   var hvpPauseButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-pause"]')
@@ -13,7 +16,47 @@ jQuery(function($) {
   var hvpVolumeButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-volume"]')
   var hvpVolumeBar = hvpVideoPlayer.find('.hvp-volume-bar')
 
+  var hvpPreviousButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-previous"]')
+  var hvpBackwardButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-backward"]')
+  var hvpForwardButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-forward"]')
+  var hvpNextButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-next"]')
+
   var hvpFullscreenButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-fullscreen"]')
+
+  function hvpNotify(string, type = 'info') {
+    var notification = $('<div class="hvp-notification" />')
+    var icon = '<i class="fas fa-info-circle"></i>'
+    notification.html(icon + ' ' + string)
+    hvpNotificationArea.prepend(notification)
+    setTimeout(function() {
+      notification.fadeOut(750, function() {
+        $(this).remove()
+      })
+    }, 2000)
+  }
+
+  function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return false;
+  }
 
   hvpVideoElement = $.extend(hvpVideoElement, {
     playPause: function(forcePause = false) {
@@ -51,20 +94,42 @@ jQuery(function($) {
     }
     hvpVolumeButton.children('i').attr('class',false).addClass(volumeClass)
   }
-  setVolumeButton()
+
+  function setVolume() {
+    var volume = getCookie('hvpVolume')
+    if(!volume) {
+      setCookie('hvpVolume', hvpVideoElement.volume, 365)
+      volume = hvpVideoElement.volume
+    }
+    hvpVideoElement.volume = volume
+    hvpVolumeBar.val(volume*100)
+
+    var muted = getCookie('hvpMuted')
+    if(muted == 'true') {
+      $(hvpVideoElement).prop('muted',true)
+    } else {
+      $(hvpVideoElement).prop('muted',false)
+    }
+    setVolumeButton()
+  }
+  setVolume()
 
   hvpVolumeButton.click(function() {
     if($(hvpVideoElement).prop('muted')) {
       $(hvpVideoElement).prop('muted',false)
+      setCookie('hvpMuted', 'false', 365)
     } else {
       $(hvpVideoElement).prop('muted',true)
+      setCookie('hvpMuted', 'true', 365)
     }
     setVolumeButton()
   })
 
   hvpVolumeBar.change(function() {
     $(hvpVideoElement).prop('muted',false)
+    setCookie('hvpMuted', 'false', 365)
     hvpVideoElement.volume = hvpVolumeBar.val() / 100
+    setCookie('hvpVolume', hvpVideoElement.volume, 365)
     setVolumeButton()
   })
 
@@ -78,6 +143,24 @@ jQuery(function($) {
     updateProgressBar()
   })
 
+  function updateLoadingProgressBar() {
+    var range = 0
+    var bf = hvpVideoElement.buffered
+    var time = hvpVideoElement.currentTime
+
+    while(!(bf.start(range) <= time && time <= bf.end(range))) {
+      range += 1
+    }
+    var loadStartPercentage = bf.start(range) / hvpVideoElement.duration
+    var loadEndPercentage = bf.end(range) / hvpVideoElement.duration
+    var loadPercentage = loadEndPercentage - loadStartPercentage
+    loadedProgressBar.val(loadPercentage*100).html(loadPercentage*100 + '% played')
+  }
+
+  $(hvpVideoElement).on('progress', function() {
+    updateLoadingProgressBar()
+  })
+
   hvpSeekBar.change(function() {
     var time = hvpVideoElement.duration * (hvpSeekBar.val() / 100)
     hvpVideoElement.currentTime = time
@@ -89,6 +172,19 @@ jQuery(function($) {
 
   hvpSeekBar.mouseup(function() {
     hvpVideoElement.playPause()
+  })
+
+  hvpPreviousButton.click(function() {
+  })
+  hvpBackwardButton.click(function() {
+    hvpVideoElement.playbackRate = hvpVideoElement.playbackRate / 1.5
+    hvpNotify('Playback rate set to ' + Math.round(hvpVideoElement.playbackRate*100) + '%')
+  })
+  hvpForwardButton.click(function() {
+    hvpVideoElement.playbackRate = hvpVideoElement.playbackRate * 1.5
+    hvpNotify('Playback rate set to ' + Math.round(hvpVideoElement.playbackRate*100) + '%')
+  })
+  hvpNextButton.click(function() {
   })
 
   function toggleFullscreen() {
