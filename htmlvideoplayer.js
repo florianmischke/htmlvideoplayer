@@ -256,7 +256,6 @@
     })
 
     $(document).keypress(function(e) {
-      console.log(e.originalEvent.code)
       switch(e.originalEvent.code) {
         case 'ArrowUp':
           volumeUp()
