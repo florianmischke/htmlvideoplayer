@@ -117,7 +117,7 @@
     }
     setVolume()
 
-    hvpVolumeButton.click(function() {
+    function mute_unmute() {
       if($(hvpVideoElement).prop('muted')) {
         $(hvpVideoElement).prop('muted',false)
         setCookie('hvpMuted', 'false', 365)
@@ -126,7 +126,9 @@
         setCookie('hvpMuted', 'true', 365)
       }
       setVolumeButton()
-    })
+    }
+
+    hvpVolumeButton.click(mute_unmute)
 
     hvpVolumeBar.change(function() {
       $(hvpVideoElement).prop('muted',false)
@@ -135,6 +137,18 @@
       setCookie('hvpVolume', hvpVideoElement.volume, 365)
       setVolumeButton()
     })
+
+    function volumeUp(val = 5) {
+      newVolume = parseInt(hvpVolumeBar.val()) + val
+      hvpVolumeBar.val(newVolume)
+      hvpVolumeBar.change()
+    }
+
+    function volumeDown(val = 5) {
+      newVolume = parseInt(hvpVolumeBar.val()) - val
+      hvpVolumeBar.val(newVolume)
+      hvpVolumeBar.change()
+    }
 
     function rewindFiveSeconds() {
       hvpVideoElement.currentTime -= 5
@@ -235,6 +249,35 @@
 
     $(hvpVideoElement).dblclick(function() {
       toggleFullscreen()
+    })
+
+    $(document).keypress(function(e) {
+      console.log(e.originalEvent.code)
+      switch(e.originalEvent.code) {
+        case 'ArrowUp':
+          volumeUp()
+          break;
+        case 'ArrowDown':
+          volumeDown()
+          break;
+        case 'ArrowLeft':
+          rewindFiveSeconds()
+          break;
+        case 'ArrowRight':
+          skipFiveSeconds()
+          break;
+        case 'KeyM':
+          mute_unmute()
+          break;
+        case 'Space':
+          hvpVideoElement.playPause()
+          break;
+        case 'Enter':
+          toggleFullscreen()
+          break;
+        default:
+          break;
+      }
     })
   }
 })( jQuery );
