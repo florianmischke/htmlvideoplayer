@@ -16,6 +16,9 @@
     var hvpVolumeButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-volume"]')
     var hvpVolumeBar = hvpVideoPlayer.find('.hvp-volume-bar')
 
+    var hvpRewindButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-rewind"]')
+    var hvpSkipButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-skip"]')
+
     var hvpPreviousButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-previous"]')
     var hvpBackwardButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-backward"]')
     var hvpForwardButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-forward"]')
@@ -132,6 +135,17 @@
       setCookie('hvpVolume', hvpVideoElement.volume, 365)
       setVolumeButton()
     })
+
+    function rewindFiveSeconds() {
+      hvpVideoElement.currentTime -= 5
+    }
+
+    function skipFiveSeconds() {
+      hvpVideoElement.currentTime += 5
+    }
+
+    hvpRewindButton.click(rewindFiveSeconds)
+    hvpSkipButton.click(skipFiveSeconds)
 
     function updateProgressBar() {
       var percentage = ((100 / hvpVideoElement.duration) * hvpVideoElement.currentTime)
