@@ -269,24 +269,32 @@
     $(document).keypress(function(e) {
       switch(e.originalEvent.code) {
         case 'ArrowUp':
+          e.preventDefault()
           volumeUp()
           break;
         case 'ArrowDown':
+          e.preventDefault()
           volumeDown()
           break;
         case 'ArrowLeft':
+          e.preventDefault()
           rewindFiveSeconds()
           break;
         case 'ArrowRight':
+          e.preventDefault()
           skipFiveSeconds()
           break;
         case 'KeyM':
+          e.preventDefault()
           mute_unmute()
           break;
         case 'Space':
+        case 'KeyK':
+          e.preventDefault()
           hvpVideoElement.playPause()
           break;
         case 'Enter':
+          e.preventDefault()
           toggleFullscreen()
           break;
         default:
