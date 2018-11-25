@@ -20,7 +20,7 @@ body{
 .hvp-player video{position:absolute;top:0;bottom:0;left:0;max-width:100%;max-height:100%;border:0;z-index:1000}
 
 .hvp-notificationarea{position:absolute;top:0;right:0;z-index:1100}
-.hvp-notificationarea .hvp-notification{margin:1rem;padding:0.5rem 1rem;background:rgba(255,255,255,0.75);font-size:1.25rem;border-radius:4px}
+.hvp-notificationarea .hvp-notification{margin:1rem 1rem 0;padding:0.5rem 1rem;background:rgba(255,255,255,0.75);font-size:1.25rem;border-radius:4px}
 
 .hvp-player-controls{position:absolute;bottom:0;left:0;width:100%;z-index:1010;padding:0.5rem;font-size:2rem;opacity:0;transition:opacity 0.5s ease}
 .hvp-player:hover .hvp-player-controls{opacity:1}
@@ -72,6 +72,8 @@ body{
 .hvp-button{margin:0;padding:0.5rem 1rem;background:none;border:0;outline:0;cursor:pointer;transition:all 0.25s ease;opacity:0.75}
 .hvp-button:hover{transform:scale(1.25, 1.25);opacity:1}
 .hvp-button:focus{outline:0;/* box-shadow: 0px 0px 5px 0px rgba(0,140,255,1) */}
+
+.hvp-button[data-toggle="hvp-start"]{width:100%;font-size:10rem;position:absolute;top:0;bottom:0;left:0;right:0;z-index:1000;text-shadow:0px 0px 5px #fff;}
 
 .hvp-volume{}
 .hvp-volume .hvp-volume-bar{width:200px;opacity:0;transition:opacity 0.5s ease;transform:rotate(270deg);background:rgba(0,0,0,0.5);position:absolute;left:0;bottom:149px;padding:1.5rem 1rem;border-radius:4px}

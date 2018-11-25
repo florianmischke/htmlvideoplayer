@@ -26,6 +26,17 @@
 
     var hvpFullscreenButton = hvpVideoPlayer.find('.hvp-button[data-toggle="hvp-fullscreen"]')
 
+    if(!this.prop('autoplay')) {
+      hvpVideoPlayer.find('.hvp-player-controls').hide()
+      $('<button type="button" class="hvp-button" data-toggle="hvp-start"><i class="far fa-play-circle"></i></button>').appendTo(hvpVideoPlayer)
+    }
+
+    hvpVideoPlayer.on('click','.hvp-button[data-toggle="hvp-start"]',function() {
+      hvpVideoPlayer.find('.hvp-player-controls').show()
+      hvpVideoElement.play()
+      $(this).remove()
+    })
+
     function hvpNotify(string, type = 'info') {
       var notification = $('<div class="hvp-notification" />')
       var icon = '<i class="fas fa-info-circle"></i>'
