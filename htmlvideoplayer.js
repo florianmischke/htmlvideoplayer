@@ -139,22 +139,26 @@
     })
 
     function volumeUp(val = 5) {
+      hvpNotify('Increased volume by 5')
       newVolume = parseInt(hvpVolumeBar.val()) + val
       hvpVolumeBar.val(newVolume)
       hvpVolumeBar.change()
     }
 
     function volumeDown(val = 5) {
+      hvpNotify('Decreased volume by 5')
       newVolume = parseInt(hvpVolumeBar.val()) - val
       hvpVolumeBar.val(newVolume)
       hvpVolumeBar.change()
     }
 
     function rewindFiveSeconds() {
+      hvpNotify('Rewound 5 seconds')
       hvpVideoElement.currentTime -= 5
     }
 
     function skipFiveSeconds() {
+      hvpNotify('Skipped 5 seconds')
       hvpVideoElement.currentTime += 5
     }
 
